@@ -37,3 +37,4 @@ jobs:
           template: ./arm-templates/storageaccount.json
           parameters: ./arm-templates/storageaccount.parameters.json
           deploymentName: rg-githubactions
+          deploymentMode: incremental
