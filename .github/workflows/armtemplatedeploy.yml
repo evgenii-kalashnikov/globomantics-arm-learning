@@ -7,6 +7,11 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+env: 
+  resource_group_name: rg-githubactions01
+  location: "West Europe"
+  subscriptionId: bac318f7-0b52-42f9-8449-ca71005105cb
+
 jobs:
   armDeploy:
     runs-on: ubuntu-latest
@@ -19,17 +24,17 @@ jobs:
         with: 
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy Resource Group rg-githubactions01 with AZ CLI
+      - name: Deploy Resource Group ${{ env.resource_group_name }} with AZ CLI
         uses: Azure/arm-deploy@v1
         with: 
           scope: subscription
-          subscriptionId: bac318f7-0b52-42f9-8449-ca71005105cb
+          subscriptionId: ${{ env.subscriptionId }}
           region: West Europe
           template: ./arm-templates/resourcegroup.json
           parameters:
-            location="West Europe"
-            resourceGroupName=rg-githubactions01
-          deploymentName: rg-githubactions01
+            location=${{ env.location }}
+            resourceGroupName=${{ env.resource_group_name }}
+          deploymentName: ${{ env.resource_group_name }}
           deploymentMode: incremental
 
       - name: Deploy Storage Account
@@ -37,26 +42,27 @@ jobs:
         id: storageAccountDeploy
         with: 
           scope: resourcegroup
-          resourceGroupName: rg-githubactions01
-          subscriptionId: bac318f7-0b52-42f9-8449-ca71005105cb
+          resourceGroupName: ${{ env.resource_group_name }}
+          subscriptionId: ${{ env.subscriptionId }}
           template: ./arm-templates/storageaccount.json
           parameters:
             sku=Standard_LRS
             storageAccountName=globostg003
-            location="West Europe"
-          deploymentName: rg-githubactions01
+            location=${{ env.location }}
+          deploymentName: ${{ env.resource_group_name }}
           deploymentMode: incremental
 
       - name: Deploy Virtual Machine
         uses: Azure/arm-deploy@v1
         with: 
           scope: resourcegroup
-          resourceGroupName: rg-githubactions01
-          subscriptionId: bac318f7-0b52-42f9-8449-ca71005105cb
+          resourceGroupName: ${{ env.resource_group_name }}
+          subscriptionId: ${{ env.subscriptionId }}
           template: ./arm-templates/virtualmachine.json
           parameters:
             adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
-          deploymentName: rg-githubactions01
+            location=${{ env.location }}
+          deploymentName: ${{ env.resource_group_name }}
           deploymentMode: incremental
 
       - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
