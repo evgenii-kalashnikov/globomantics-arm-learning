@@ -6,12 +6,13 @@
             "type": "string",
             "metadata": {
                 "description": "Enter a name for the storage account"
-            }
+            },
+            "defaultValue": "storage001"
         },
         "location": {
             "type": "string",
             "metadata": {
-                "description": "Enter a location to deploy account to"
+                "description": "Enter a location to deploy the account to"
             }
         },
         "sku": {
@@ -25,11 +26,11 @@
     "variables": {},
     "resources": [
         {
-            "name": "[parameters('storageAccountName')]",
+            "name": "[concat('fadv-ek-', parameters('storageAccountName'))]",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2021-04-01",
             "tags": {
-                "displayName": "storageaccount1"
+                "displayName": "[parameters('storageAccountName')]"
             },
             "location": "[parameters('location')]",
             "kind": "StorageV2",
@@ -38,6 +39,5 @@
                 "tier": "Premium"
             }
         }
-    ],
-    "outputs": {}
+    ]
 }
