@@ -55,7 +55,7 @@ jobs:
           subscriptionId: bac318f7-0b52-42f9-8449-ca71005105cb
           template: ./arm-templates/virtualmachine.json
           parameters:
-            adminPassword="EuKalash1992!"
+            adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
           deploymentName: rg-githubactions01
           deploymentMode: incremental
 
