@@ -29,7 +29,7 @@ jobs:
         with: 
           scope: subscription
           subscriptionId: ${{ env.subscriptionId }}
-          region: West Europe
+          region: ${{ env.location }}
           template: ./arm-templates/resourcegroup.json
           parameters:
             location=${{ env.location }}
