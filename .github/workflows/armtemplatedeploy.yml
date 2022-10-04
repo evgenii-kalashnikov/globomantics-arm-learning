@@ -24,10 +24,10 @@ jobs:
         with: 
           scope: subscription
           subscriptionId: bac318f7-0b52-42f9-8449-ca71005105cb
-          region: Australia East
+          region: Australia Central
           template: ./arm-templates/resourcegroup.json
           parameters:
-            location="Australia East"
+            location="Australia Central"
             resourceGroupName=rg-githubactions
           deploymentName: rg-githubactions
 
@@ -41,8 +41,8 @@ jobs:
           template: ./arm-templates/storageaccount.json
           parameters:
             sku=Standard_LRS
-            storageAccountName=globostg002
-            location="Australia East"
+            storageAccountName=globostg003
+            location="Australia Central"
           deploymentName: rg-githubactions
           deploymentMode: incremental
 
