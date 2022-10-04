@@ -43,7 +43,7 @@
     "outputs": {
         "BlobUri": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))).primaryEndpoints.blob]"
+            "value": "[reference(resourceId('Microsoft.Storage/storageAccounts', concat('fadvek', parameters('storageAccountName')))).primaryEndpoints.blob]"
         }
     }
 }
