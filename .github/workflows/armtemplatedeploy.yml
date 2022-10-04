@@ -47,4 +47,16 @@ jobs:
           deploymentName: rg-githubactions01
           deploymentMode: incremental
 
+      - name: Deploy Virtual Machine
+        uses: Azure/arm-deploy@v1
+        with: 
+          scope: resourcegroup
+          resourceGroupName: rg-githubactions01
+          subscriptionId: bac318f7-0b52-42f9-8449-ca71005105cb
+          template: ./arm-templates/virtualmachine.json
+          parameters:
+            adminPassword="EuKalash1992!"
+          deploymentName: rg-githubactions01
+          deploymentMode: incremental
+
       - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
